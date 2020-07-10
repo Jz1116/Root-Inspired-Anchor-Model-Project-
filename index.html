@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang = "en">
+<head>
+  <title> Root Inspired Anchor Model Project </title>
+  <link rel="stylesheet" href="styles/style.css">
+  <meta charset="UTF-8">
+</head>
+<h1>
+  Root Inspired Anchor Model Project
+</h1>
+<h6> A project by Muhao Feng, Zhen Jiang, Yihua Xu;
+</h6>
+<h6>Supervised by Seth Mallett, Mahdi Roozbahani.</h6>
+
+<body>
+
+<h2>
+  Introduction
+</h2>
+
+<h3> Motivation:
+</h3>
+<img src= "pictures/practical use.jpg" width = "525" height = "360" alt="Root Inspire Model Practical example" align = "center">
+<p> Just as the picture suggests, A wall separating two platforms has different elevations. The wall shown in the picture has a tendency to incline to the right because the mass on the left side of the wall is much greater. Therefore, we attach this root-inspired anchor model into the wall, which provides the resistance against the force exerted by the left side.
+</p>
+<br/>
+<img src= "pictures/high-voltage_transmission_tower_933-3121_big.jpg" width = "525" height = "360" alt="Root Inspire Model Practical example" align = "center">
+<p>
+  In the real world setting, this model is of great significance! For example, we can utilize this model in transmission towers. Due to the wind blowing and the weight of the wire, sometimes, the foundation is not solid enough and may get uplifted. Then, the anchored model came into practice. People can implement them under transmission towers and make the structure of towers as solid as possible. Furthermore, we can also apply the same model in retaining wall, solidifying dams, and reinforcing the slope.
+</p>
+<br/>
+<p> During experiments, Dr. Mallett took steps to embed the model into the soil and then utilized machines to vertically pull up the anchor. After repetitive experiments using different models and particulates, 181 data sets were collected.
+</p>
+
+<h2>
+  Brief Definition of Terms
+</h2>
+
+<h3>
+  Input Terms:
+</h3>
+<img src= "pictures/root.png" width = "360" height = "510" alt="Root Inspire Model exhibition">
+<p> Number of branches ( n[count] )
+</p>
+<p>Internal branching angle ( α [°] )
+</p>
+<p>Length of the branch ( L [mm] )
+</p>
+<P>Total height of the model ( H [mm] )
+</p>
+<p>Horizontal width ( b[mm] )
+</p>
+<p>Length of the stem ( Ls [mm] )
+</p>
+<P>Diameter of the model ( d [mm] )
+</p>
+<p>Radians between each branch, evenly distributed ( 2π/n [rad] )
+</p>
+<p>Property of soil (Unit Weight Force) ( γ [N/mm3] )
+</p>
+<P> Displacement made by the pullout force ( δ(Pmax) [mm] )
+</p>
+<p> The derivative of the Pmax over displacement (max(ktan) [N/mm])
+</p>
+<p> Weight of the soil immediately above model (γAH' [N])
+</p>
+<P>Volume of the model ( Vroot [mm3] )
+</p>
+<p>Initial start pull force ( P0 [N] )
+</p>
+<p>Soil relative density ( DR [ ] )
+</p>
+<p>Material
+</p>
+<P> Mean diameter of the sand ( d50 [mm] )
+</p>
+<p>Strength of the soil, friction angle ( φ [°] )
+</p>
+<p>Weight of soil’s length to the whole length ( f )
+</p>
+<p>  Total number of Features: 19
+</p>
+
+<h3>
+  Output Terms:
+</h3>
+<p>
+  Maximum pullout force ( Pmax [N] )
+</p>
+<img src= "pictures/Correlation.png" width = "533" height = "233" alt="Problem Solving Procedure" align = "center">
+<h2><b> Problems that we are striving to solve
+  </b>
+</h2>
+
+  <p> How do different features contribute to the pullout capacity of our root-inspired Model? </p>
+  <p> How can accurate datasets predict the pullout force? </p>
+  <p> How do different algorithms lead to an accuracy difference? Why? </p>
+  <p> How do unique features vs interdependent features lead to different predictive models? </p>
+  <p> What can be improved for our predictive model?  </p>
+
+<h2>
+  Project Objective
+</h2>
+<p>
+  The objective of this project is to develop a machine-learning-based method to predict and calculate the pullout force. To make this project more feasible to carry out, we will only use the features that are unique (not dependent on other properties).
+</p>
+<p> Our group implements different algorithms to yield the best prediction model.
+</p>
+
+
+
+<h2> Methodology
+</h2>
+<img src= "pictures/Procedure.png" width = "800" height = "350" alt="Problem Solving Procedure" align = "center">
+<h3> <b> Before Everything: </b>
+</h3>
+  <p> When we received our dataset, we found that we have 19 features. Some of the features are interrelated with one another, for example, two features’ named γAH' [N] and Nγ [ ], their multiplication equals to the maximum pullout force, which can not be utilized as the features.
+  <p>
+<br>
+<h3> <b> Data Preprocessing: </b>
+</h3>
+  <p> There are several data points with values “NaN”. By removing these data points, our final number of data points become 177.
+  </p>
+  <p> Since the scale of each feature is quite different, we need to utilize the normalization. By calculating all features’ mean and sigma(StandardScaler()), our data is normalized and ready to go.
+  </p>
+<br>
+<h3> <b> Dimension Reduction: </b>
+</h3>
+  <p> 1. After reducing interdependent features, what we are left with are 17 unique features. These 17 unique features are still too many for us because when we apply our algorithms, we didn’t get satisfactory results. (Some of the features are actually not of great importance.) Consequently, we decided to reduce our dimensions.
+  </p>
+<h5> <b> Two Strategies are utilized </b>
+</h5>
+  <p> a. By capturing variance, Principal Component Analysis is implemented to reduce the dimensions. After PCA, our dimensions are reduced to 7.
+  </p>
+<p> b. One other way is through choosing a subset of features that maximizes information gain from all features. By doing so, we managed to figure out the best feature. And our dimensions are reduced to 6.
+  </p>
+<img src= "pictures/T_Accuracy_for_Unique_Best_Features.png" width = "800" height = "350" alt="Best Feature seletion line dot" align = "center">
+<br>
+<h3> Data Split
+</h3>
+<p> The ratio of test data to training data was kept constant at 3 to 1 for each model.
+</p>
+<br>
+<h3> Random Forest:
+</h3>
+<img src= "pictures/tree_after_hype.png" width = "800" height = "350" alt="Decision tree after hyperparamter" align = "center">
+<p> To avoid potential overfitting problems generated by a decision tree, we utilized Ensemble learning algorithm -- Random Forest. Several samples of data are created by random sampling from the dataset with replacement. The results (the graph below) suggest that our predictive value of the pullout capacity has a value of 85.82% of the predictive accuracy generated by the data feature dataset. Opposingly, the accuracy brought by the PCA dataset gives us 84.06%.
+  </p>
+
+
+
+<p>
+<img src= "pictures/T_before_CV_hyperparameter.png" alt="Tree before Hyperparameter">
+<img src= "pictures/T_PCA_plot.png" alt="Tree after hyperparameter">
+</p>
+
+<p> Then, we started to implement hyperparameter optimization and our predictive model got a better result. Originally, our “n-estimator”(decision tree quantity) is 1000, and “random-state” is a random number. However, after tuning, “n-estimator” is set to 281, and the parameter named “random-state” is tuned to be 187. The accuracy boosted to 86.31%.
+</p>
+<img src= "pictures/Accuracy_BA_Hyper.png" width = "400" height = "400" alt="Random Forest Compare Before and After Hyperparameter">
+<p>In order to achieve a more accurate result, K fold cross-validation was also implemented for the data set. By combatting the overfitting issue, 10 fold validation is used in congruence with Random Forest ensemble learning. This means we utilize the same random forest algorithm, however, each 10% of data acted as the test data for one iteration. On average, for 2-10 fold validation, the average k-fold value is 0.89834. This means that our predictive model is pretty reliable and successful.
+</p>
+<img src= "pictures/K-fold_validation.png" width = "800" height = "350" alt="K fold" align = "center">
+
+<h3> <b> Neural Network: </b>
+</h3>
+<p> <b> Neural network </b> are computing systems that are inspired by the biological neural networks that constitute animal brains. Such system performs tasks by consdiering examples, generally without being programmed with any task-specific rules.
+</p>
+<img src= "pictures/model_nn.png" width = "400" height = "175" alt="neural network" align = "center">
+<p> We applied TensorFlow Keras to implement a neural network in order to reach a linear regression using our 12 different features including our bias (pandas.get_dummies converts n_count to six different categories to get numerical values). First, we flattened the input layer. Flatten allowed us to convert the feature map to a single column that fully connects to the hidden layers. Then, we created two hidden layers, the first one with 6 neurons and the other one with 4 neurons. Every neuron uses relu as the activation process since relu not only converges faster but also ensures linearity when it hits positive values. In the end, we finish the model with an output layer with one neuron with different activations including sigmoid, tanh, and SeLU.
+</p>
+<img src= "pictures/NN3a_plot.png" width = "800" height = "350" alt="neural network" align = "center">
+<p> After modeling, we optimized the model utilizing gradient descent and generated loss by using mean squared error. Then, we plugged training features and training models into the model and set testing features and testing labels as the validation to estimate the prediction. We changed the value of epochs from 1000 to 10000 and generated accuracy based on the prediction of the model on testing features. The graph shown above demonstrates that, as epochs grow, the accuracy for predicting testing labels increases simultaneously. In addition, the accuracy generated is really low for sigmoid activation since sigmoid is best used for classfication problems. Generally, from the plot, the hyperbolic tangent and scaled exponential linear unit activation functions outperform the sigmoid activation function.
+</p>
+<img src= "pictures/tanh_4000.png" width = "600" height = "275" alt="neural network tanh" align = "center">
+<img src= "pictures/sigmoid_7000.png" width = "600" height = "275" alt="neural network sigmoid" align = "center">
+<img src= "pictures/selu_9000.png" width = "600" height = "275" alt="neural network selu" align = "center">
+<p> For every activation function, we selected the best accuracy based on epochs ranging from 1000 to 10000. Then, we plotted the correlation between epochs and loss value for each one. From the three plots shown above, it shows that the performance of hyperbolic tangent and scaled exponential linear unit activation functions are comparable to each other, with SeLU providing more accurate prediction since it has lower training loss and test loss. Overall, SeLU activation function generates an accurate model for neural network.
+</p>
+
+
+<h3> <b> Linear Regression: </b>
+</h3>
+<p> We also applied linear regression into our dataset. Linear regression and Polynomial regression gives us an accuracy of 81.48% and 43.45% respectively.
+</p>
+<img src= "pictures/Linear_Regression_Plot.png" width = "800" height = "350" alt="Linear Regression" align = "center">
+<img src= "pictures/Polynomial_plot.png" width = "800" height = "350" alt="Kernel Polynomial" align = "center">
+<p>Through the result of the polynomial and linear regression, we can find that polynomial regression does not predict better than the linear regression algorithm. There are mainly two reasons. The first reason is that our data is linearly separable, which makes linear regression more accurate than polynomial regression. We confirm our hypothesis by introducing perceptron, which is a classifier of whether our dataset is linearly separable or not. If the result converges with the given data sample, the dataset can be assumed to be linearly separable. We categorize our pullout capacity into a binary classification - high values and low values. Just as the confusion matrix suggests below, we get the accuracy of 95.56%, meaning that our data is linearly separable. That is the reason that linear regression provides more accurate results.
+</p>
+<img src= "pictures/T_Perceptron_plot.png" width = "800" height = "350" alt="Perceptron Binary Classification" align = "center">
+<br>
+<img src= "pictures/heat_map.png" width = "400" height = "175" alt="Perceptron heat map" align = "center">
+<p> The second reason is that polynomial regression is very easy to overfit. By changing the degrees for polynomial regression, we can see different accuracy rates. When the degree reaches 4, it starts to overfit. The best result is given when the degree is 3, it gives the accuracy rate of 43.45%.
+</p>
+<img src= "pictures/Polynomial_Degrees_plot.png" width = "800" height = "350" alt="Kernel Polynomial" align = "center">
+<br>
+<h5> <b> In-depth Linear Regression analysis: </b>
+</h5>
+<p>We utilized both Lasso and Ridge regression, trying to penalize the overfitting problem. By altering the value of lambda, our predictive model’s accuracy decreases at the same time.  Primarily, it is because of the linearly separable nature of our datasets.
+</p>
+<img src= "pictures/Ridge_Lasso_Linear.png" width = "800" height = "350" alt="Linear Regression" align = "center">
+
+<h3> <b> Support Vector Machine(SVM): </b>
+</h3>
+<p> Support vector machine (SVM) was implemented in our dataset.
+</p>
+<p> Kernel RBF gives us an accuracy of 49.53%. This is one of the lowest accuracy value amongst every algorithm. That is because we are killing the generalization by going to infinite-dimension. It causes very serious overfitting. The decision boundary line will be super wiggle. The test data is again crying.
+</p>
+<img src= "pictures/T_RBF_plot.png" width = "800" height = "350" alt="Kernel RBF plot" align = "center">
+<p> We also implemented Kernel Sigmoid, which results in the accuracy of 70.85%. It is essentially not the best algorithm. Kernel Sigmoid is more likely to be used to solve classification problems. Since our data is hard to separate into categorical values due to large variance, the ultimate accuracy we got from this algorithm is low.
+</p>
+<img src= "pictures/Kernel_sigmoid_plot.png" width = "800" height = "350" alt="Logistic Regression" align = "center">
+
+<h2> <b> Conclusion: </b>
+</h2>
+<p> Through various algorithms, we find out that the Random Forest algorithm gives us the best predictive model with a value of 86.31%. Therefore, our pullout capacity can be predicted pretty accurately.
+</p>
+<img src= "pictures/Accuracy_different_algorithm4.png" width = "1000" height = "425" alt="Accuracy for different algorithms" align = "center">
+
+
+<h2> <b> Future improvement: </b>
+</h2>
+
+<p> There are several improvements that we can probably do in order to make our predictive model even better. Firstly, the measurement of data could have some errors because of the operation of data measurement. We get the pullout force by analyzing the amount of soil being pullout (which could not be exactly accurate). We also have some bad data in our data, we already removed them and reduced the number of datasets for better results. For example, the feature named n-count, one of the possible input is infinity (which can not be converted to quantified data easily), we have to use a certain method (np.dummies) to treat this as new features. This may make our predictive model less accurate.
+</p>
+<br/>
+<p> Furthermore, under the circumstance that we only have 177 data inputs, if we could have more data points, we could definitely utilize more of them to become our train/ test/ validation parts. It could probably prevent overfitting more effectively, therefore enhance the predictive model quality.
+</p>
+<br/>
+<p> Also, as we are getting to learn more machine learning and data mining related knowledge, we would like to apply feature engineering into our predictive models. By doing this, we can adapt to a wider variety of conditions.
+</p>
+<br/>
+<p> Finally, while applying these predictive models into practice, we should research into more soil types. Currently, we only researched into three types of soil, and we are definitely encountering more in the real setting.
+</p>
+
+
+
+
+
+
+
+
+<h4>
+  <b> Reference: </b>
+</h4>
+<ul style="list-style-type:disc;" class = "methods">
+  <li> 1. Mallett, Seth, “Additive Manufacturing and Computed Tomography of Bio-Inspired Anchorage Systems.” Géotechnique Letters, Accessed 07 June 2019 www.icevirtuallibrary.com/doi/full/10.1680/jgele.18.00090. </li>
+  <li> 2. Moayedi, Hossein, and Abbas Rezaei. "An artificial neural network approach for under-reamed piles subjected to uplift forces in dry sand." SpringerLink. 04 Apr. 2017. Springer London. Accessed 08 June 2019 https://link.springer.com/article/10.1007/s00521-017-2990-z. </li>
+  <li> 3. V.F.Rodriguez-Galiano, B.Ghimire, J.Rogan, M.Chica-Olmo, J.P.Rigol-Sanchez, "An assessment of the effectiveness of a random forest classifier for land-cover classification." ISPRS Journal of Photogrammetry and Remote Sensing. 01 Dec. 2011. Accessed 11 June 2019  </li>
+  <li> 4. "Time series prediction using artificial wavelet neural network and multi-resolution analysis: Application to wind speed data." Renewable Energy. 15 Feb. 2016. Pergamon. 16 July 2019 https://www.sciencedirect.com/science/article/pii/S0960148116301045. </li>
+</ul>
+
+</body>
+</html>
